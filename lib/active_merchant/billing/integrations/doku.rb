@@ -6,8 +6,11 @@ module ActiveMerchant #:nodoc:
     module Integrations #:nodoc:
       module Doku
 
+        TEST_URL = 'http://103.10.129.17/Suite/Receive'
+        LIVE_URL = 'http://pay.doku.com/Suite/Receive'
+
         def self.service_url
-          'https://apps.myshortcart.com/payment/request-payment/'
+          ActiveMerchant::Billing::Base.integration_mode == :test ? TEST_URL : LIVE_URL
         end
 
         def self.notification(post, options = {})

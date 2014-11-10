@@ -34,14 +34,16 @@ module ActiveMerchant #:nodoc:
         class Helper < ActiveMerchant::Billing::Integrations::Helper
           def initialize(order, account, options = {})
             @shared_key      = options.delete(:credential2)
-            @transidmerchant = order
+            @transidmerchant = options.delete(:transidmerchant)
+            @account = account
+            @amount = options.delete(:amount)
             super
           end
 
           def form_fields
             add_field 'WORDS', words
             add_field 'BASKET', basket
-            add_field 'TRANSIDMERCHANT', @transidmerchant
+            add_field 'CHAINMERCHANT', 'NA'
             @fields
           end
 
@@ -54,7 +56,7 @@ module ActiveMerchant #:nodoc:
             add_field mappings[:customer][:birth_date], params[:birth_date]
           end
 
-          mapping :account,           'STOREID'
+          mapping :account,           'MALLID'
           mapping :amount,            'AMOUNT'
           mapping :cancel_return_url, 'URL'
 
@@ -80,11 +82,12 @@ module ActiveMerchant #:nodoc:
           private
 
           def basket
-            "Checkout #{@transidmerchant},#{@fields['AMOUNT']},1,#{@fields['AMOUNT']}"
+            "item,#{@amount},1,#{@amount}"
           end
 
           def words
-            @words ||= Digest::SHA1.hexdigest("#{ @fields['AMOUNT'] }#{ @shared_key }#{ @transidmerchant }")
+            p @fields
+            @words ||= Digest::SHA1.hexdigest("#{ @amount }#{ @account }#{ @shared_key }#{ @transidmerchant }")
           end
 
           def add_address(key, params)

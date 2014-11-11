@@ -86,7 +86,6 @@ module ActiveMerchant #:nodoc:
           end
 
           def words
-            p @fields
             @words ||= Digest::SHA1.hexdigest("#{ @amount }#{ @account }#{ @shared_key }#{ @transidmerchant }")
           end
 

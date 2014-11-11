@@ -6,7 +6,7 @@ module ActiveMerchant #:nodoc:
       module Doku
         class Notification < ActiveMerchant::Billing::Integrations::Notification
 
-          self.production_ips = ['103.10.128.11', '103.10.128.14']
+          self.production_ips = ['103.10.129.17', '103.10.129.9']
           SUCCESS_RESPONSE_CODE = '0000'
 
           def complete?

@@ -33,6 +33,10 @@ module ActiveMerchant #:nodoc:
             'CONTINUE'
           end
 
+          def error_response
+            'STOP'
+          end
+
           def currency
             'IDR'
           end

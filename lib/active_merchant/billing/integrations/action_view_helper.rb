@@ -48,10 +48,18 @@ module ActiveMerchant #:nodoc:
           service_class = integration_module.const_get('Helper')
 
           form_options = options.delete(:html) || {}
+          url_prefs = options.delete(:url_prefs)
           service = service_class.new(order, account, options)
           form_options[:method] = service.form_method
           result = []
           service_url = service.respond_to?(:credential_based_url) ? service.credential_based_url : integration_module.service_url
+
+          if url_prefs
+            uri = URI(service_url)
+            uri.query = URI.decode_www_form(uri.query.to_s).to_h.merge(url_prefs).to_query
+            service_url = uri.to_s
+          end
+
           result << form_tag(service_url, form_options)
 
           result << capture(service, &proc)

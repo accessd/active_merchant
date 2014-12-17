@@ -10,7 +10,7 @@ module ActiveMerchant #:nodoc:
         LIVE_URL = 'http://pay.doku.com/Suite/Receive'
 
         def self.service_url
-          ActiveMerchant::Billing::Base.integration_mode == :test ? TEST_URL : TEST_URL
+          ActiveMerchant::Billing::Base.integration_mode == :test ? TEST_URL : LIVE_URL
         end
 
         def self.notification(post, options = {})

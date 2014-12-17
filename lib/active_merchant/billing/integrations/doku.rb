@@ -7,7 +7,7 @@ module ActiveMerchant #:nodoc:
       module Doku
 
         TEST_URL = 'http://103.10.129.17/Suite/Receive'
-        LIVE_URL = 'http://pay.doku.com/Suite/Receive'
+        LIVE_URL = 'https://pay.doku.com/Suite/Receive'
 
         def self.service_url
           ActiveMerchant::Billing::Base.integration_mode == :test ? TEST_URL : LIVE_URL
